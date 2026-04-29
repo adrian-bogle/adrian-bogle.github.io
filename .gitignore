@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Drafts (deck files starting with `_` are local-only)
+_*.html
+draft-*.html
+
+# Temp / build
+*.tmp
+*.bak
+node_modules/
