@@ -3,49 +3,312 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Adrian Bogle</title>
+<title>Field Notes &middot; Adrian Bogle</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; height: 100%; }
+html, body { margin: 0; padding: 0; }
+
+:root {
+  --bg:           #0e1117;
+  --card:         #161b22;
+  --card-2:       #1c2128;
+
+  --ink:          #e6edf3;
+  --ink-soft:     #c9d1d9;
+  --ink-mute:     #8b949e;
+  --ink-faint:    rgba(255,255,255,0.28);
+
+  --rule:         rgba(255,255,255,0.08);
+  --rule-strong:  rgba(255,255,255,0.18);
+
+  --accent:       #7393b3;
+  --accent-soft:  #94adc7;
+  --accent-line:  rgba(115, 147, 179, 0.50);
+
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-ui:      'Inter', system-ui, -apple-system, sans-serif;
+}
+
 body {
-  background: #141516;
-  color: #F1EFEB;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.65;
+  font-weight: 400;
+  font-feature-settings: "kern", "liga", "calt", "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.005em;
 }
+
 main {
-  text-align: center;
-  padding: 2rem;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 3rem) 5rem;
 }
-h1 {
-  font-size: 1.1rem;
+
+/* Brand strip */
+.brand-strip {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0 0 1.25rem;
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  border-bottom: 1px solid var(--rule);
+}
+.brand-mark {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding-top: 0.15rem;
+}
+.byline {
+  text-align: right;
+  font-family: var(--font-ui);
+  line-height: 1.4;
+}
+.byline .name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  display: block;
+}
+
+/* Hero */
+header.hero {
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+}
+header.hero::before {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--accent);
+  margin-bottom: 1.5rem;
+}
+header.hero h1 {
+  font-family: var(--font-body);
+  font-size: clamp(2.2rem, 4.4vw, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 1.1rem;
+}
+header.hero .standfirst {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--ink-soft);
+  letter-spacing: -0.005em;
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* Section heading */
+.section-head {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding: 0 0 0.5rem;
+  margin: 0 0 1.5rem;
+  border-bottom: 1px solid var(--rule-strong);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.section-head .count {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--ink-mute);
+  letter-spacing: 0.16em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Work list */
+ol.work-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: work;
+}
+ol.work-list > li {
+  counter-increment: work;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 1.1rem;
+  padding: 1.5rem 0 1.7rem;
+  border-bottom: 1px solid var(--rule);
+}
+ol.work-list > li:last-child { border-bottom: none; }
+ol.work-list > li::before {
+  content: counter(work, decimal-leading-zero);
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.005em;
+}
+
+.work-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.55rem;
+}
+.work-date, .work-topic, .read-time {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #F1EFEB;
-  margin: 0 0 0.5rem;
+  font-variant-numeric: tabular-nums;
 }
-p {
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #888a8c;
+.work-date { color: var(--ink-mute); }
+.work-topic { color: var(--ink); font-weight: 700; }
+.read-time { color: var(--ink-mute); font-weight: 500; font-style: italic; }
+
+.work-title {
+  display: block;
+  font-family: var(--font-body);
+  font-size: clamp(1.18rem, 1.9vw, 1.4rem);
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  margin: 0 0 0.55rem;
+}
+.work-title a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-line);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.work-title a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.work-summary {
+  font-size: 0.97rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0 0 0.75rem;
+  max-width: 64ch;
+  font-weight: 400;
+}
+
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
   margin: 0;
+  list-style: none;
+  padding: 0;
+}
+.tag {
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding: 0.18rem 0.52rem 0.16rem;
+  border: 1px solid var(--rule-strong);
+}
+
+/* Footer */
+footer.endnote {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 720px) {
+  body { font-size: 16.5px; }
+  .brand-strip { gap: 1rem; }
+  .brand-mark { padding-top: 0.5rem; }
+  ol.work-list > li { grid-template-columns: 1fr; gap: 0.5rem; }
+  ol.work-list > li::before { font-size: 1.3rem; }
 }
 </style>
 </head>
 <body>
 <main>
-  <h1>Adrian Bogle</h1>
-  <p>Coming soon</p>
+
+  <div class="brand-strip">
+    <div class="brand-mark">Field Notes</div>
+    <div class="byline">
+      <span class="name">Adrian Bogle</span>
+    </div>
+  </div>
+
+  <header class="hero">
+    <h1>Frameworks &amp; Memos</h1>
+    <p class="standfirst">
+      Working notes on data, architecture, and the operating models around them.
+      Every piece closes with a recommendation, an open question, or a stated blind spot.
+      The why behind the why.
+    </p>
+  </header>
+
+  <h2 class="section-head">
+    <span>Published</span>
+    <span class="count">1 piece</span>
+  </h2>
+
+  <ol class="work-list">
+    <li>
+      <div>
+        <div class="work-meta">
+          <span class="work-date">04 / 28 / 2026</span>
+          <span class="work-topic">Architecture</span>
+          <span class="read-time">~ 10 min read</span>
+        </div>
+        <h3 class="work-title">
+          <a href="four-pillars.html">A modern data architecture rests on four pillars. Most teams build three.</a>
+        </h3>
+        <p class="work-summary">
+          Strategy, architecture, platform, and operating model. Most teams build the first three and compensate
+          for the fourth without naming it. Agents are the forcing function that exposes the gap. Six diagnostic
+          questions to surface which pillar is missing.
+        </p>
+        <ul class="work-tags">
+          <li class="tag">Architecture</li>
+          <li class="tag">Operating Model</li>
+          <li class="tag">Agents</li>
+        </ul>
+      </div>
+    </li>
+  </ol>
+
+  <footer class="endnote">
+    Adrian Bogle
+  </footer>
+
 </main>
 </body>
 </html>

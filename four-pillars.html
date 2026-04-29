@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Four Pillars &middot; Adrian Bogle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+:root {
+  /* Surfaces — cool deep slate */
+  --bg:           #0e1117;
+  --card:         #161b22;
+  --card-2:       #1c2128;
+
+  /* Ink — cool tonal hierarchy */
+  --ink:          #e6edf3;
+  --ink-soft:     #c9d1d9;
+  --ink-mute:     #8b949e;
+  --ink-faint:    rgba(255,255,255,0.28);
+
+  /* Rules */
+  --rule:         rgba(255,255,255,0.08);
+  --rule-strong:  rgba(255,255,255,0.18);
+
+  /* Accent — muted slate-steel blue */
+  --accent:       #7393b3;
+  --accent-soft:  #94adc7;
+  --accent-line:  rgba(115, 147, 179, 0.50);
+  --accent-faint: rgba(115, 147, 179, 0.14);
+
+  /* Type */
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-ui:      'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.65;
+  font-weight: 400;
+  font-feature-settings: "kern", "liga", "calt", "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.005em;
+}
+
+/* Scroll progress rail */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--accent);
+  z-index: 100;
+  transition: width 0.05s linear;
+}
+
+main {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 3rem) 5rem;
+}
+
+/* Brand strip */
+.brand-strip {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0 0 1.25rem;
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  border-bottom: 1px solid var(--rule);
+}
+.brand-mark {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding-top: 0.15rem;
+}
+.byline {
+  text-align: right;
+  font-family: var(--font-ui);
+  line-height: 1.4;
+}
+.byline .name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  display: block;
+}
+.byline .date {
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--ink-mute);
+  display: block;
+  margin-top: 0.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hero */
+header.hero {
+  margin-bottom: clamp(3.5rem, 7vw, 5rem);
+}
+header.hero::before {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--accent);
+  margin-bottom: 1.5rem;
+}
+header.hero .kicker {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 1rem;
+}
+header.hero h1 {
+  font-family: var(--font-body);
+  font-size: clamp(2.1rem, 4.4vw, 3.1rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 1.5rem;
+  max-width: 24ch;
+}
+header.hero .standfirst {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--ink-soft);
+  letter-spacing: -0.005em;
+  max-width: 64ch;
+  margin: 0;
+}
+
+/* Primary section card */
+section.primary {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  padding: clamp(2rem, 3.5vw, 2.75rem);
+  margin: 0 0 1.5rem;
+}
+
+.sec-head {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1.25rem;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+}
+.sec-num {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.005em;
+  line-height: 1;
+}
+.sec-kicker {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 0.5rem;
+}
+section.primary h2 {
+  font-family: var(--font-body);
+  font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  max-width: 30ch;
+}
+
+section.primary .lead,
+section.primary p {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0 0 1rem;
+  max-width: 64ch;
+}
+section.primary .lead {
+  font-size: 1.05rem;
+  color: var(--ink);
+  font-weight: 450;
+  margin-bottom: 1.5rem;
+}
+
+/* Card grid for the seven decisions */
+.decisions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+  margin: 1.75rem 0;
+}
+.decisions-grid > div {
+  padding: 1.1rem 1.25rem 1.2rem;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: var(--card-2);
+}
+.decision-label {
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+}
+.decision-body {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* Two-track comparison (checklist vs platform) */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: 1.75rem 0;
+  border: 1px solid var(--rule);
+}
+.compare > div {
+  padding: 1.25rem 1.4rem 1.4rem;
+  background: var(--card-2);
+}
+.compare > div + div {
+  border-left: 1px solid var(--rule);
+}
+.compare-label {
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 0.65rem;
+}
+.compare-label.featured { color: var(--accent); }
+.compare h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 0.65rem;
+  letter-spacing: -0.01em;
+}
+.compare ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.compare li {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  padding: 0.32rem 0 0.32rem 0.85rem;
+  position: relative;
+}
+.compare li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--ink-mute);
+}
+
+/* Failure-mode inset */
+.failure-inset {
+  background: var(--card-2);
+  border-left: 2px solid var(--accent);
+  padding: 1rem 1.25rem 1.05rem;
+  margin: 1.5rem 0 0;
+}
+.failure-inset .compare-label { margin-bottom: 0.5rem; }
+.failure-inset ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem 1.5rem;
+}
+.failure-inset li {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  padding-left: 0.85rem;
+  position: relative;
+}
+.failure-inset li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--ink-mute);
+}
+
+/* Numbered list (section 06) */
+ol.questions {
+  list-style: none;
+  counter-reset: q;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+ol.questions > li {
+  counter-increment: q;
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 1rem;
+  padding: 1rem 0 1.05rem;
+  border-bottom: 1px solid var(--rule);
+}
+ol.questions > li:last-child { border-bottom: none; }
+ol.questions > li::before {
+  content: counter(q, decimal-leading-zero);
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.q-text {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink);
+  font-weight: 450;
+  margin: 0 0 0.25rem;
+}
+.q-pillar {
+  font-family: var(--font-ui);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* Closes — recommendation, open question, blind spot */
+.close {
+  margin-top: 2rem;
+  padding: 1rem 1.25rem 1.05rem;
+  border-left: 2px solid var(--accent);
+  background: var(--accent-faint);
+}
+.close-label {
+  font-family: var(--font-ui);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+}
+.close-text {
+  font-size: 0.97rem;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0;
+  max-width: 64ch;
+  font-weight: 450;
+}
+
+/* Footer */
+footer.endnote {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+footer.endnote a {
+  color: var(--ink-mute);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+}
+footer.endnote a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+@media (max-width: 720px) {
+  body { font-size: 16.5px; }
+  .sec-head { grid-template-columns: 1fr; gap: 0.4rem; }
+  .sec-num { font-size: 1.1rem; }
+  .decisions-grid { grid-template-columns: 1fr; }
+  .compare { grid-template-columns: 1fr; }
+  .compare > div + div { border-left: none; border-top: 1px solid var(--rule); }
+  .failure-inset ul { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<main>
+
+  <div class="brand-strip">
+    <div class="brand-mark">Field Notes</div>
+    <div class="byline">
+      <span class="name">Adrian Bogle</span>
+      <span class="date">04 / 28 / 2026</span>
+    </div>
+  </div>
+
+  <header class="hero">
+    <p class="kicker">Architecture &middot; Operating Model</p>
+    <h1>A modern data architecture rests on four pillars. Most teams build three.</h1>
+    <p class="standfirst">
+      Strategy says why. Architecture says how data flows. Platform is what your teams use to build and run it.
+      Operating model decides whether any of it produces what the business asked for.
+      The fourth is the one that breaks. And it's the one agents expose first.
+    </p>
+  </header>
+
+  <!-- 01 -->
+  <section class="primary">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <div>
+        <p class="sec-kicker">Strategy &middot; The Why</p>
+        <h2>Strategy is the only pillar the business writes.</h2>
+      </div>
+    </div>
+    <p class="lead">
+      Strategy names the outcomes data is supposed to deliver. The questions the business needs answered.
+      The decisions it needs to make faster. The workflows it expects to automate.
+    </p>
+    <p>
+      Without a strategy, every piece of analytics work is a request. Each one is judged on its own merits,
+      not against a direction the team is moving. The other three pillars exist to deliver this one. If the strategy isn't written,
+      the other three are running blind even when they're running well.
+    </p>
+    <div class="close">
+      <p class="close-label">Open question</p>
+      <p class="close-text">
+        Can you state your data strategy in one sentence without naming a tool?
+        If the sentence requires the words Snowflake, dbt, or Sigma to land, you have a platform brief, not a strategy.
+      </p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="primary">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <div>
+        <p class="sec-kicker">Architecture &middot; How, At The System Level</p>
+        <h2>Architecture is how data moves, not what tools move it.</h2>
+      </div>
+    </div>
+    <p class="lead">
+      The technical design at the system level. Sources, layers, contracts, consumption surfaces.
+      How a row of raw event data becomes a number on a dashboard or an answer to a query.
+    </p>
+    <p>
+      Architecture lives one level above the platform. It describes flow and shape — what models exist,
+      what they depend on, what guarantees they make. Most teams confuse it with the platform, and the diagram
+      on the slide ends up being a logo grid: Salesforce arrow Snowflake arrow dbt arrow Sigma. That diagram
+      doesn't describe an architecture. It describes a procurement order.
+    </p>
+    <div class="close">
+      <p class="close-label">Stated blind spot</p>
+      <p class="close-text">
+        Most "architecture diagrams" are platform diagrams. The architecture is what the diagram leaves unsaid —
+        the layers, the contracts, the grain at each step, the rules nobody had to enforce because the system did.
+      </p>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="primary">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <div>
+        <p class="sec-kicker">Platform &middot; The What</p>
+        <h2>A platform is what you bought. It is not what you built.</h2>
+      </div>
+    </div>
+    <p class="lead">
+      The collection of tools your teams actually use to run the architecture.
+      Warehouse, transformation, orchestration, semantic layer, BI, observability.
+    </p>
+    <p>
+      The easiest pillar to acquire. The easiest to mistake for the others. A team can replatform from
+      Redshift to Snowflake or from Looker to Sigma and not change a single decision about how data work
+      gets done. Buying a platform decides nothing about strategy. It runs no operating model on its own.
+      Tools sit inside the architecture and inside the operating model — never above either of them.
+    </p>
+    <div class="close">
+      <p class="close-label">Recommendation</p>
+      <p class="close-text">
+        Name your platform in one breath. If it takes three, you have a stack, not a platform.
+        And if you can't name the boundary between platform and architecture, the boundary doesn't exist —
+        the platform is doing your architecture's job, badly.
+      </p>
+    </div>
+  </section>
+
+  <!-- 04 — central section, multi-panel -->
+  <section class="primary">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <div>
+        <p class="sec-kicker">Operating Model &middot; How, At The Organizational Level</p>
+        <h2>The fourth pillar decides whether the first three deliver.</h2>
+      </div>
+    </div>
+    <p class="lead">
+      The operating model is the set of decisions about how data work happens.
+      Who owns what. How requests flow. What the system enforces. What people are trusted to remember.
+    </p>
+    <p>
+      Strategy, architecture, and platform produce the outcomes the business named only when these decisions
+      are made deliberately. When they aren't, the platform compensates for the operating model nobody wrote down.
+      The team gets faster at the workaround, never at the work.
+    </p>
+
+    <p class="sec-kicker" style="margin-top:2rem">The seven decisions every operating model answers</p>
+    <div class="decisions-grid">
+      <div>
+        <p class="decision-label">Ownership</p>
+        <p class="decision-body">Accountability for each data product, each source, each incident. When something breaks, the owner is named before anyone asks.</p>
+      </div>
+      <div>
+        <p class="decision-label">Team topology</p>
+        <p class="decision-body">Central, embedded, hybrid. The hardest decision to change later, which is why it should be the first decision made.</p>
+      </div>
+      <div>
+        <p class="decision-label">Workflows</p>
+        <p class="decision-body">Request to delivery. Code promotion. Access provisioning. Repeatable, documented, identical across teams.</p>
+      </div>
+      <div>
+        <p class="decision-label">Standards</p>
+        <p class="decision-body">Naming, layers, documentation, testing, branching. Decided once, written down, enforced by something other than memory.</p>
+      </div>
+      <div>
+        <p class="decision-label">SLAs</p>
+        <p class="decision-body">What the business can expect — freshness, KPI delivery speed, recovery time. Without SLAs, every request becomes a negotiation.</p>
+      </div>
+      <div>
+        <p class="decision-label">Governance</p>
+        <p class="decision-body">Approvals, sign-offs, sensitive fields, lineage. A live dimension of every decision, not a separate project to start next quarter.</p>
+      </div>
+      <div>
+        <p class="decision-label">Enforcement</p>
+        <p class="decision-body">Whether the system enforces the above, or a human is expected to remember. The single most diagnostic question in the model.</p>
+      </div>
+      <div>
+        <p class="decision-label">Posture</p>
+        <p class="decision-body">All seven decisions get made. The choice is whether they're decided deliberately or compensated for by whoever gets there first.</p>
+      </div>
+    </div>
+
+    <p class="sec-kicker" style="margin-top:2rem">The diagnostic that separates the two modes</p>
+    <p>
+      The core issue: are the controls that matter enforced by the system, or by people following a process?
+      That single question separates an operating model that scales from one the team is constantly working around.
+    </p>
+
+    <div class="compare">
+      <div>
+        <p class="compare-label">Checklist control</p>
+        <h4>Depends on people remembering.</h4>
+        <ul>
+          <li>Quality scales with onboarding thoroughness</li>
+          <li>Degrades under growth, turnover, and pressure</li>
+          <li>Audit trail is manual and drift-prone</li>
+          <li>Each team eventually invents its own variant</li>
+          <li>Failure looks like inconsistency, not breakage</li>
+        </ul>
+      </div>
+      <div>
+        <p class="compare-label featured">Platform enforcement</p>
+        <h4>The system prevents the wrong action.</h4>
+        <ul>
+          <li>CI/CD blocks the merge before the violation lands</li>
+          <li>Access provisioning is automatic and revocable</li>
+          <li>Audit trail is generated, not maintained</li>
+          <li>Standards stay identical across teams by default</li>
+          <li>Scales cleanly with headcount and surface area</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="failure-inset">
+      <p class="compare-label">How checklist control compounds</p>
+      <ul>
+        <li>New hires inherit SOPs instead of guardrails</li>
+        <li>New business units multiply manual steps</li>
+        <li>Vendor frameworks deepen the lock-in</li>
+        <li>Audit drift hides because nobody's looking</li>
+      </ul>
+    </div>
+
+    <div class="close">
+      <p class="close-label">Recommendation</p>
+      <p class="close-text">
+        Every standard is either enforced by the system or it isn't a standard.
+        There is no third option. A naming convention that lives in a Confluence page is a suggestion;
+        the same convention enforced by CI/CD is a contract. Treat the difference as load-bearing.
+      </p>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="primary">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <div>
+        <p class="sec-kicker">Forcing Function &middot; Agents</p>
+        <h2>Agents make the missing pillar visible.</h2>
+      </div>
+    </div>
+    <p class="lead">
+      An agent doesn't fail at strategy. It fails at the seam between strategy and operating model —
+      what's in scope, what's authoritative, what's deprecated, who's allowed to see it.
+    </p>
+    <p>
+      The warehouse that worked for a careful human reviewer breaks the moment an agent browses freely.
+      Wide tables exhaust context faster than humans worked around them. Column-level documentation moves from
+      optional to critical path. Lineage moves from nice-to-have to a trust requirement —
+      an agent that can't trace a number to a source can't defend the answer it just gave. Access models that assumed
+      a single human reviewer fail under natural-language query patterns the operating model never specified.
+    </p>
+    <p>
+      None of this is new. The operating model gaps were always there. The agent is the user that doesn't
+      know which workaround the team learned to use, doesn't notice the table comment that says "DEPRECATED — see v2,"
+      and doesn't ask before joining the wrong customer ID. It exposes everything the team had been compensating for.
+    </p>
+    <div class="close">
+      <p class="close-label">Open question</p>
+      <p class="close-text">
+        Can your architecture support an agent that browses freely, or does it depend on a human knowing
+        which table to trust? The honest answer to that question is the answer to whether your operating model
+        is real or improvised.
+      </p>
+    </div>
+  </section>
+
+  <!-- 06 — diagnostic / call to action -->
+  <section class="primary">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <div>
+        <p class="sec-kicker">Diagnostic &middot; Six Questions</p>
+        <h2>Six questions surface which pillar is missing.</h2>
+      </div>
+    </div>
+    <p class="lead">
+      Every shop has answers to these. The question is whether the answers were decided deliberately,
+      written down, and enforced by the system — or whether they emerged by accumulation.
+    </p>
+
+    <ol class="questions">
+      <li>
+        <div>
+          <p class="q-text">Can you state your data strategy in one sentence without naming a tool?</p>
+          <p class="q-pillar">Strategy</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <p class="q-text">Can a new engineer derive layer, owner, and content from a table name alone?</p>
+          <p class="q-pillar">Architecture</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <p class="q-text">Can you name the boundary between your platform and your architecture in one breath?</p>
+          <p class="q-pillar">Platform</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <p class="q-text">Can you name the owner of any data product in under thirty seconds?</p>
+          <p class="q-pillar">Operating Model &middot; Ownership</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <p class="q-text">Are the controls that matter enforced by the system, or by people following a process?</p>
+          <p class="q-pillar">Operating Model &middot; Enforcement</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <p class="q-text">Could your team extend the framework if your systems integrator walked away tomorrow?</p>
+          <p class="q-pillar">Operating Model &middot; Lock-in</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="close">
+      <p class="close-label">The ask</p>
+      <p class="close-text">
+        Which of these can you answer cold? Which are you compensating for?
+        Which would an agent expose first? The pillar that's missing isn't the one you can't define.
+        It's the one you've been compensating for without naming.
+      </p>
+    </div>
+  </section>
+
+  <footer class="endnote">
+    Adrian Bogle &middot; <a href="index.html">Field Notes</a>
+  </footer>
+
+</main>
+
+<script>
+(function() {
+  var rail = document.getElementById('progress');
+  function update() {
+    var h = document.documentElement;
+    var st = h.scrollTop || document.body.scrollTop;
+    var sh = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+    var pct = sh > 0 ? (st / sh) * 100 : 0;
+    rail.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+
+</body>
+</html>
